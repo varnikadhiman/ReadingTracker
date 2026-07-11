@@ -1,5 +1,17 @@
 {
   "books": [
+    {
+      "title": "Listen For The Lie",
+      "author": "Amy Tintera",
+      "categories": "Psychological Thriller",
+      "genre": "Psychological Thriller",
+      "dateRead": "July 2026",
+      "rating": "4.5/5",
+      "status": "Completed - Recommended",
+      "summary": "Really needed to read a good book. This was a right choice.",
+      "cover": "BookCovers/ListenForTheLie.jpg",
+      "description": "Lucy Chase was found wandering the streets, covered in her best friend Savvy's blood. Everyone in town believes Lucy murdered Savvy, but Lucy can't remember what happened that night. Years later, a true-crime podcast begins investigating the case, forcing Lucy to return home and confront the secrets surrounding the murder. As buried truths begin to surface, Lucy must determine whether she really is a killer or if the real murderer has been hiding in plain sight all along."
+     },
      {
       "title": "His Truth Her Truth",
       "author": "Noelle Holten",
