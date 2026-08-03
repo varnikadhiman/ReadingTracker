@@ -1,9 +1,21 @@
 {
   "books": [
     {
+      "title": "First Lie Wins",
+      "author": "Ashley Elston",
+      "categories": "Psychological Thriller, Favorites",
+      "genre": "Psychological Thriller",
+      "dateRead": "August 2026",
+      "rating": "5/5",
+      "status": "Completed - Recommended",
+      "summary": "Very smart. SO GOOD.",
+      "cover": "BookCovers/FirstLieWins.jpg",
+      "description": "Evie Porter has everything a nice Southern girl could want: a doting boyfriend, a house with a white picket fence, a tight group of friends. The only catch: Evie Porter doesn’t exist. The identity comes first: Evie Porter. Once she’s given a name and location by her mysterious boss, Mr. Smith, she learns everything there is to know about the town and the people in it. Then the mark: Ryan Sumner. The last piece of the puzzle is the job. Evie isn’t privy to Mr. Smith’s real identity, but she knows this job isn’t like the others. Ryan has gotten under her skin, and she’s starting to envision a different sort of life for herself. But Evie can’t make any mistakes—especially after what happened last time. Evie Porter must stay one step ahead of her past while making sure there’s still a future in front of her. The stakes couldn’t be higher—but then, Evie has always liked a challenge."
+     },
+    {
       "title": "Listen For The Lie",
       "author": "Amy Tintera",
-      "categories": "Psychological Thriller",
+      "categories": "Psychological Thriller, Favorites",
       "genre": "Psychological Thriller",
       "dateRead": "July 2026",
       "rating": "4.5/5",

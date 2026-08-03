@@ -508,7 +508,7 @@
             background: rgba(212, 165, 116, 0.08);
             border: 1px solid rgba(212, 165, 116, 0.25);
             border-radius: var(--radius-xl);
-            color: var(--lavender);
+            color: var(--candlelight);
             cursor: pointer;
             transition: all var(--transition-fast);
             font-size: 0.75em;
@@ -1166,7 +1166,7 @@ function setupFiltersAndListeners() {
 function buildReadingHistory(books) {
     const timelineContainer = document.getElementById('timeline-scrollable');
     timelineContainer.innerHTML = '';
-    
+
     // Group books by dateRead
     const groupedByDate = {};
     books.forEach(book => {
@@ -1176,17 +1176,25 @@ function buildReadingHistory(books) {
         }
         groupedByDate[date].push(book);
     });
-    
+
+    // Get all dates and move DNF to the beginning
+    const dates = Object.keys(groupedByDate);
+
+    if (dates.includes("DNF")) {
+        dates.splice(dates.indexOf("DNF"), 1);
+        dates.push("DNF");
+    }
+
     // Create timeline items for each date
-    Object.keys(groupedByDate).forEach(date => {
+    dates.forEach(date => {
         const timelineItem = document.createElement('div');
         timelineItem.className = 'timeline-item';
-        
+
         const dateDiv = document.createElement('div');
         dateDiv.className = 'timeline-date';
         dateDiv.textContent = date;
         timelineItem.appendChild(dateDiv);
-        
+
         groupedByDate[date].forEach(book => {
             const bookDiv = document.createElement('div');
             bookDiv.className = 'timeline-book';
@@ -1194,7 +1202,7 @@ function buildReadingHistory(books) {
             bookDiv.textContent = book.title;
             timelineItem.appendChild(bookDiv);
         });
-        
+
         timelineContainer.appendChild(timelineItem);
     });
 }
