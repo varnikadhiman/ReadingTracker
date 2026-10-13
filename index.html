@@ -1974,7 +1974,24 @@ window.addEventListener('load', () => {
         box-shadow: var(--shadow-sm);
         pointer-events: none;
     }
+
+@media (max-width: 768px) {
+    #visitor-counter {
+        position: absolute;
+        right: 12px;
+        bottom: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #visitor-counter.show-mobile-counter {
+        opacity: 1;
+        visibility: visible;
+    }
+}
 </style>
+
 
 
 <script>
@@ -1987,6 +2004,8 @@ window.addEventListener('load', () => {
     const isLocal =
         window.location.hostname === "localhost" ||
         window.location.hostname === "127.0.0.1";
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
     // Keep the counter hidden until a valid count is received.
     counterElement.style.display = "none";
@@ -2016,6 +2035,51 @@ window.addEventListener('load', () => {
             if (Number.isFinite(data.count) && data.count > 0) {
                 counterElement.textContent = "Total Views: " + data.count;
                 counterElement.style.display = "inline-flex";
+
+                if (isMobile) {
+                    // Place the counter at the bottom of the document.
+                    const positionCounterAtPageBottom = () => {
+                        const pageHeight = Math.max(
+                            document.documentElement.scrollHeight,
+                            document.body.scrollHeight
+                        );
+
+                        counterElement.style.top =
+                            (pageHeight - counterElement.offsetHeight) + "px";
+                    };
+
+                    const checkPageBottom = () => {
+                        const atBottom =
+                            window.innerHeight + window.scrollY >=
+                            document.documentElement.scrollHeight - 10;
+
+                        if (atBottom) {
+                            positionCounterAtPageBottom();
+                            counterElement.classList.add("show-mobile-counter");
+                        }
+                    };
+
+                    // Position it after the page content has loaded.
+                    positionCounterAtPageBottom();
+
+                    window.addEventListener(
+                        "scroll",
+                        checkPageBottom,
+                        { passive: true }
+                    );
+
+                    window.addEventListener("resize", () => {
+                        positionCounterAtPageBottom();
+                        checkPageBottom();
+                    });
+
+                    window.addEventListener("load", () => {
+                        positionCounterAtPageBottom();
+                        checkPageBottom();
+                    });
+
+                    checkPageBottom();
+                }
             }
         } catch (error) {
             console.error("Visitor counter error:", error);
