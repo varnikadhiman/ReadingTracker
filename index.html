@@ -1942,17 +1942,11 @@ window.addEventListener('load', () => {
 </script>
 
 
-<!-- GoatCounter: track visits -->
-<script
-    data-goatcounter="https://varnikadhiman.goatcounter.com/count"
-    async
-    src="https://gc.zgo.at/count.js">
-</script>
+
+<!-- Cloudflare: track visits -->
 
 <!-- Visible total views counter -->
-<div id="visitor-counter">
-    Total Views: Loading...
-</div>
+<div id="visitor-counter"></div>
 
 <style>
     #visitor-counter {
@@ -1971,11 +1965,6 @@ window.addEventListener('load', () => {
 
         background: transparent;
         border: none;
-        box-shadow: none;
-
-        /* background: rgba(212, 165, 116, 0.08);
-        border: 1px solid rgba(212, 165, 116, 0.25);
-        border-radius: var(--radius-xl); */
 
         color: var(--candlelight);
         font-family: inherit;
@@ -1987,25 +1976,57 @@ window.addEventListener('load', () => {
     }
 </style>
 
+
 <script>
-    fetch("https://varnikadhiman.goatcounter.com/counter/TOTAL.json")
-        .then(response => {
+    const counterElement = document.getElementById("visitor-counter");
+
+    const counterURL =
+        "https://views-count.varnika-dhiman.workers.dev/" +
+        "?action=count&site=reading-tracker";
+
+    const isLocal =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+    // Keep the counter hidden until a valid count is received.
+    counterElement.style.display = "none";
+
+    async function updateCounter() {
+        try {
+            let response;
+
+            if (isLocal) {
+                // Local testing: read the count without incrementing it.
+                response = await fetch(counterURL);
+            } else {
+                // Published website: increment once per page load.
+                response = await fetch(
+                    "https://views-count.varnika-dhiman.workers.dev/" +
+                    "?action=visit&site=reading-tracker",
+                    { method: "POST" }
+                );
+            }
+
             if (!response.ok) {
                 throw new Error("Counter unavailable");
             }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById("visitor-counter").textContent =
-                "Total Views: " + data.count;
-        })
-        .catch(() => {
-            document.getElementById("visitor-counter").textContent =
-                "Total Views: —";
-        });
-</script>
-<!-- End GoatCounter -->
 
+            const data = await response.json();
+
+            if (Number.isFinite(data.count) && data.count > 0) {
+                counterElement.textContent = "Total Views: " + data.count;
+                counterElement.style.display = "inline-flex";
+            }
+        } catch (error) {
+            console.error("Visitor counter error:", error);
+            // Keep the counter hidden if the request fails.
+        }
+    }
+
+    updateCounter();
+</script>
+
+<!-- End Cloudflare Counter -->
 
 </body>
 </html>
